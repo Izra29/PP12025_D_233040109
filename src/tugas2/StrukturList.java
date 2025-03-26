@@ -1,69 +1,79 @@
 package tugas2;
 
 public class StrukturList {
-    private Node HEAD;  
+    // Class Node untuk menyimpan data pecahan
+    static class Node {
+        double data;
+        Node next;
 
+        public Node(double data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    private Node head; // Pointer ke elemen pertama
 
     public StrukturList() {
-        this.HEAD = null;
+        this.head = null;
     }
 
     public boolean isEmpty() {
-        return this.HEAD == null;
+        return this.head == null;
     }
 
- //untuk menambahkan Tail
-//    public void addTail(int data) {
-//        Node posNode = null, curNode = null;
-//        Node newNode = new Node(data);  
-//
-//       
-//        if (isEmpty()) {
-//            HEAD = newNode;
-//        } else {
-//           
-//            curNode = HEAD;
-//            while (curNode != null) {
-//                posNode = curNode;
-//                curNode = curNode.getNext();
-//            }
-//         
-//            posNode.setNext(newNode);
-//        }
-//    }
+    // Menambahkan node di awal (Head)
+    public void addHead(double data) {
+        Node newNode = new Node(data);
+        newNode.next = head;
+        head = newNode;
+    }
 
-  
+    // Menambahkan node di akhir (Tail)
+    public void addTail(double data) {
+        Node newNode = new Node(data);
+        if (isEmpty()) {
+            head = newNode;
+            return;
+        }
+        Node curNode = head;
+        while (curNode.next != null) {
+            curNode = curNode.next;
+        }
+        curNode.next = newNode;
+    }
+
+    // Menambahkan node di posisi tertentu
+    public void insertAtPosition(double data, int position) {
+        Node newNode = new Node(data);
+        if (position == 1) { // Jika posisi pertama, gunakan addHead
+            addHead(data);
+            return;
+        }
+
+        Node curNode = head;
+        Node prevNode = null;
+        int i = 1;
+
+        while (curNode != null && i < position) {
+            prevNode = curNode;
+            curNode = curNode.next;
+            i++;
+        }
+
+        if (prevNode != null) {
+            prevNode.next = newNode;
+        }
+        newNode.next = curNode;
+    }
+
+    // Menampilkan isi linked list
     public void display() {
-        Node temp = HEAD;
+        Node temp = head;
         while (temp != null) {
-            System.out.print(temp.getData() + " -> ");
-            temp = temp.getNext();
+            System.out.print(temp.data + " ");
+            temp = temp.next;
         }
-        System.out.println("null");
+        System.out.println();
     }
-    
-    public void displayElement() {
-        Node curNode = HEAD;
-        while (curNode != null) {
-            System.out.print(curNode.getData() + " ");
-            curNode = curNode.getNext();  
-        }
-        System.out.println();  
-    }
-    //untuk menambahkan Head
-//    public void addHead(int data) {
-//        Node newNode = new Node(data);  // Buat node baru dengan data yang diberikan
-//
-//        if (isEmpty()) {  // Jika list kosong (HEAD = null)
-//            HEAD = newNode;  // Node baru menjadi HEAD
-//        } else {  
-//            newNode.setNext(HEAD);  // Hubungkan node baru ke node HEAD yang lama
-//            HEAD = newNode;         // Perbarui HEAD ke node baru
-//        }
-//    }
-
-    
 }
-
-
-
